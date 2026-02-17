@@ -12,7 +12,7 @@ public class Song {
     }
 
     public String toString(){
-        return (String.format("%-25s %-20s %-15s %-10d %-12.2f %-15s", title, artist, album, genre, durationSeconds, releaseYear));
+        return (String.format("%-25s %-25s %-30s %-15s %-15s", title, artist, album, releaseYear, genre));
     }
 
     public String getTitle() {
