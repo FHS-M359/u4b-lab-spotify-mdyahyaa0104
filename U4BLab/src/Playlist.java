@@ -53,4 +53,15 @@ public class Playlist {
         }
     }
 
+    public ArrayList<Song> sortGenre(String genre){
+        ArrayList<Song> newList = new ArrayList<>();
+
+        for(Song song: songs){
+            if(song.getGenre().equalsIgnoreCase(genre)){
+                newList.add(song);
+            }
+        }
+
+        return newList;
+    }
 }
