@@ -9,6 +9,8 @@ import java.util.ArrayList;
 public class SpotifyTester {
     public static void main(String[] args) throws IOException, FileNotFoundException {
         Scanner scanner = new Scanner(System.in);
+        Scanner file = new Scanner(new File("H:\\M359 YAHYAA\\u4b-lab-spotify-mdyahyaa0104\\U4BLab\\spotify_unique_years_artists.txt"));
+        ArrayList<Song> songList = new ArrayList<>();
 
         final int first = 1;
         final int second = 2;
@@ -18,48 +20,8 @@ public class SpotifyTester {
         final int sixth = 6;
         final int seventh = 7;
 
-        while (true) {
-            displayMenu();
-            System.out.println("What is your pick?");
-
-            int response = scanner.nextInt();
-            try {
-                if(response == first) {
-                    System.out.println();
-                }
-                if (response == second) {
-
-                }
-                if (response == third) {
-
-                }
-                if (response == fourth) {
-
-                }
-                if (response == fifth) {
-                    System.out.println("What genre do you want to sort by?");
-                    String genre = scanner.nextLine();
-
-                }
-                if (response == sixth) {
-                    displayPlaylist(loadPlaylist());
-                }
-                if (response == seventh) {
-                    break;
-                }
-            } catch (InputMismatchException e) {
-                System.out.println("Invalid Choice, Please pick a number between 1 - 7: ");
-            }
-        }
-
-    }
-
-    public static Playlist loadPlaylist() throws IOException, FileNotFoundException{
-        Scanner scan = new Scanner(new File("H:\\M359 YAHYAA\\u4b-lab-spotify-mdyahyaa0104\\U4BLab\\spotify_unique_years_artists.txt"));
-        ArrayList<Song> songList = new ArrayList<>();
-
-        while(scan.hasNextLine()){
-            String[] line = scan.nextLine().split(",");
+        while(file.hasNextLine()){
+            String[] line = file.nextLine().split(",");
 
             String title = line[0];
             String artist = line[1];
@@ -73,12 +35,52 @@ public class SpotifyTester {
 
         Playlist playlist = new Playlist(songList);
 
-        return playlist;
+        while (true) {
+            displayMenu();
+            System.out.println("What is your pick?");
+
+            try {
+                int response = scanner.nextInt();
+
+                if(response == first) {
+
+                } else if (response == second) {
+                    Playlist AZSortedPlaylist = new Playlist(playlist.sortArtistAZ());
+
+                    displayPlaylist(AZSortedPlaylist);
+
+                } else if (response == third) {
+                    Playlist ZASortedPlaylist = new Playlist(playlist.sortArtistZA());
+
+                    displayPlaylist(ZASortedPlaylist);
+                } else if (response == fourth) {
+
+                } else if (response == fifth) {
+                    System.out.println("What genre do you want to sort by?");
+                    scanner.nextLine();
+                    String genre = scanner.nextLine();
+
+                    Playlist genrePlaylist = new Playlist(playlist.sortGenre(genre));
+                    displayPlaylist(genrePlaylist);
+
+                } else if (response == sixth) {
+                    displayPlaylist(playlist);
+                } else if (response == seventh) {
+                    break;
+                } else{
+                    System.out.println("Invalid Choice, Please pick a number between 1 - 7: \n");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid Choice, Please choose a valid number. \n");
+                scanner.nextLine();
+            }
+        }
 
     }
 
+
     public static void displayPlaylist(Playlist playlist){
-        System.out.println(String.format("%-25s %-25s %-30s %-15s %-15s", "Title", "Artist", "Album", "Release Year", "Genre"));
+        System.out.println("\n" + String.format("%-25s %-25s %-30s %-15s %-15s", "Title", "Artist", "Album", "Release Year", "Genre"));
         System.out.println("--------------------------------------------------------------------------------------------------------");
         System.out.println(playlist.toString());
     }
