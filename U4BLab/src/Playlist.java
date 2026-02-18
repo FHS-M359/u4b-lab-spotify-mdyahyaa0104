@@ -64,4 +64,8 @@ public class Playlist {
 
         return newList;
     }
+
+//    public ArrayList<Song> sortArtist(String artist){
+//
+//    }
 }

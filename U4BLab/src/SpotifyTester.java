@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 public class SpotifyTester {
     public static void main(String[] args) throws IOException, FileNotFoundException {
         Scanner scanner = new Scanner(System.in);
+
         final int first = 1;
         final int second = 2;
         final int third = 3;
@@ -22,7 +24,7 @@ public class SpotifyTester {
 
             int response = scanner.nextInt();
             try {
-                if (scanner.nextInt() == first) {
+                if(response == first) {
                     System.out.println();
                 }
                 if (response == second) {
@@ -35,23 +37,24 @@ public class SpotifyTester {
 
                 }
                 if (response == fifth) {
+                    System.out.println("What genre do you want to sort by?");
+                    String genre = scanner.nextLine();
 
                 }
                 if (response == sixth) {
-                    loadPlaylist();
-                    displayMenu();
+                    displayPlaylist(loadPlaylist());
                 }
                 if (response == seventh) {
                     break;
                 }
-            } catch (Exception e) {
+            } catch (InputMismatchException e) {
                 System.out.println("Invalid Choice, Please pick a number between 1 - 7: ");
             }
         }
 
     }
 
-    public static void loadPlaylist() throws IOException, FileNotFoundException{
+    public static Playlist loadPlaylist() throws IOException, FileNotFoundException{
         Scanner scan = new Scanner(new File("H:\\M359 YAHYAA\\u4b-lab-spotify-mdyahyaa0104\\U4BLab\\spotify_unique_years_artists.txt"));
         ArrayList<Song> songList = new ArrayList<>();
 
@@ -70,14 +73,14 @@ public class SpotifyTester {
 
         Playlist playlist = new Playlist(songList);
 
-        displayPlaylist(playlist);
+        return playlist;
+
     }
 
     public static void displayPlaylist(Playlist playlist){
         System.out.println(String.format("%-25s %-25s %-30s %-15s %-15s", "Title", "Artist", "Album", "Release Year", "Genre"));
         System.out.println("--------------------------------------------------------------------------------------------------------");
         System.out.println(playlist.toString());
-        displayMenu();
     }
 
     public static void displayMenu(){
