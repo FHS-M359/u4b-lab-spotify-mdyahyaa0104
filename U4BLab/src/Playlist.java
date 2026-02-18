@@ -31,7 +31,6 @@ public class Playlist {
             songs.set(highIndex, songs.set(i, songs.get(highIndex)));
         }
 
-
     }
 
     public ArrayList<Song> sortArtistZA(){
