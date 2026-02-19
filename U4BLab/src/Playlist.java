@@ -1,11 +1,29 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Playlist {
-    private ArrayList<Song> songs;
+    private ArrayList<Song> songs = new ArrayList<>();
 
+    public Playlist() {}
 
-    public Playlist(ArrayList<Song> songs){
-        this.songs = songs;
+    public void loadData() throws IOException, FileNotFoundException {
+            Scanner file = new Scanner(new File("H:\\M359 YAHYAA\\u4b-lab-spotify-mdyahyaa0104\\U4BLab\\spotify_unique_years_artists.txt"));
+            songs.removeAll(songs);
+            while (file.hasNextLine()) {
+                String[] line = file.nextLine().split(",");
+
+                String title = line[0];
+                String artist = line[1];
+                String album = line[2];
+                int durationSeconds = Integer.parseInt(line[3]);
+                int releaseYear = Integer.parseInt(line[4]);
+                String genre = line[5];
+
+                songs.add(new Song(title, artist, album, durationSeconds, releaseYear, genre));
+        }
     }
 
     public String toString(){
@@ -18,78 +36,62 @@ public class Playlist {
         return output;
     }
 
-    public ArrayList<Song> sortArtistAZ() {
-        ArrayList<Song> sortedList = new ArrayList<>(songs);
-
-        for(int i = 0; i < sortedList.size() - 1; i++) {
+    public void sortArtistAZ() {
+        for(int i = 0; i < songs.size() - 1; i++) {
             int highIndex = i;
 
-            for(int j = i + 1; j < sortedList.size(); j++) {
-                if(sortedList.get(j).getArtist().compareToIgnoreCase(sortedList.get(highIndex).getArtist()) < 0) {
+            for(int j = i + 1; j < songs.size(); j++) {
+                if(songs.get(j).getArtist().compareToIgnoreCase(songs.get(highIndex).getArtist()) < 0) {
                     highIndex = j;
                 }
             }
 
-            sortedList.set(highIndex, sortedList.set(i, sortedList.get(highIndex)));
+            songs.set(highIndex, songs.set(i, songs.get(highIndex)));
         }
-
-        return sortedList;
     }
 
-    public ArrayList<Song> sortArtistZA(){
-        ArrayList<Song> sortedList = new ArrayList<>(songs);
-
-        for(int i = 0; i < sortedList.size() - 1; i++) {
+    public void sortArtistZA(){
+        for(int i = 0; i < songs.size() - 1; i++) {
             int lowIndex = i;
 
-            for(int j = i + 1; j < sortedList.size(); j++) {
-                if(sortedList.get(j).getArtist().compareToIgnoreCase(sortedList.get(lowIndex).getArtist()) > 0) {
+            for(int j = i + 1; j < songs.size(); j++) {
+                if(songs.get(j).getArtist().compareToIgnoreCase(songs.get(lowIndex).getArtist()) > 0) {
                     lowIndex = j;
                 }
             }
 
-            sortedList.set(lowIndex, sortedList.set(i, sortedList.get(lowIndex)));
+            songs.set(lowIndex, songs.set(i, songs.get(lowIndex)));
         }
-
-        return sortedList;
     }
 
-    public ArrayList<Song> sortReleaseYearAscending(){
-        ArrayList<Song> sortedList = new ArrayList<>(songs);
-
-        for (int i = 1; i < sortedList.size(); i++) {
-            Song current = sortedList.get(i);
+    public void sortReleaseYearAscending(){
+        for (int i = 1; i < songs.size(); i++) {
+            Song current = songs.get(i);
             int j = i - 1;
 
-            while (j >= 0 && sortedList.get(j).getReleaseYear() > current.getReleaseYear()) {
-                sortedList.set(j + 1, sortedList.get(j));
+            while (j >= 0 && songs.get(j).getReleaseYear() > current.getReleaseYear()) {
+                songs.set(j + 1, songs.get(j));
                 j--;
             }
 
-            sortedList.set(j + 1, current);
+            songs.set(j + 1, current);
         }
-
-        return sortedList;
     }
-    public ArrayList<Song> sortReleaseYearDescending(){
-        ArrayList<Song> sortedList = new ArrayList<>(songs);
-
-        for (int i = 1; i < sortedList.size(); i++) {
-            Song current = sortedList.get(i);
+    public void sortReleaseYearDescending(){
+        for (int i = 1; i < songs.size(); i++) {
+            Song current = songs.get(i);
             int j = i - 1;
 
-            while (j >= 0 && sortedList.get(j).getReleaseYear() < current.getReleaseYear()) {
-                sortedList.set(j + 1, sortedList.get(j));
+            while (j >= 0 && songs.get(j).getReleaseYear() < current.getReleaseYear()) {
+                songs.set(j + 1, songs.get(j));
                 j--;
             }
 
-            sortedList.set(j + 1, current);
+            songs.set(j + 1, current);
         }
-
-        return sortedList;
     }
 
-    public ArrayList<Song> sortGenre(String genre){
+    public void sortGenre(String genre){
         ArrayList<Song> newList = new ArrayList<>();
 
         for(Song song: songs){
@@ -98,10 +100,6 @@ public class Playlist {
             }
         }
 
-        return newList;
+        songs = newList;
     }
-
-//    public ArrayList<Song> sortArtist(String artist){
-//
-//    }
 }

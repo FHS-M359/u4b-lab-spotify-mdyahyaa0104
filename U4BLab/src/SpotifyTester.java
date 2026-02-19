@@ -1,16 +1,14 @@
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import java.util.ArrayList;
 
 
 public class SpotifyTester {
-    public static void main(String[] args) throws IOException, FileNotFoundException {
+    public static void main(String[] args) throws IOException, FileNotFoundException, InterruptedException {
         Scanner scanner = new Scanner(System.in);
-        Scanner file = new Scanner(new File("H:\\M359 YAHYAA\\u4b-lab-spotify-mdyahyaa0104\\U4BLab\\spotify_unique_years_artists.txt"));
-        ArrayList<Song> songList = new ArrayList<>();
+        Playlist playlist = new Playlist();
+        Playlist sortPlaylist = new Playlist();
 
         final int first = 1;
         final int second = 2;
@@ -20,61 +18,64 @@ public class SpotifyTester {
         final int sixth = 6;
         final int seventh = 7;
 
-        while(file.hasNextLine()){
-            String[] line = file.nextLine().split(",");
-
-            String title = line[0];
-            String artist = line[1];
-            String album = line[2];
-            int durationSeconds = Integer.parseInt(line[3]);
-            int releaseYear = Integer.parseInt(line[4]);
-            String genre = line[5];
-
-            songList.add(new Song(title, artist, album, durationSeconds, releaseYear, genre));
-        }
-
-        Playlist playlist = new Playlist(songList);
+        System.out.println("========= SPOTIFY MENU =========");
 
         while (true) {
             displayMenu();
-            System.out.println("What is your pick?");
+            System.out.println("What do you want to do?");
 
             try {
                 int response = scanner.nextInt();
 
                 if(response == first) {
-                    Playlist AZSortedPlaylist = new Playlist(playlist.sortArtistAZ());
-
-                    displayPlaylist(AZSortedPlaylist);
+                    sortPlaylist.loadData();
+                    sortPlaylist.sortArtistAZ();
+                    displayPlaylist(sortPlaylist);
+                    wait(2);
                 } else if (response == second) {
-                    Playlist ZASortedPlaylist = new Playlist(playlist.sortArtistZA());
-
-                    displayPlaylist(ZASortedPlaylist);
+                    sortPlaylist.loadData();
+                    sortPlaylist.sortArtistZA();
+                    displayPlaylist(sortPlaylist);
+                    wait(2);
                 } else if (response == third) {
-                    Playlist oldNewSortedPlaylist = new Playlist(playlist.sortReleaseYearAscending());
-
-                    displayPlaylist(oldNewSortedPlaylist);
+                    sortPlaylist.loadData();
+                    sortPlaylist.sortReleaseYearAscending();
+                    displayPlaylist(sortPlaylist);
+                    wait(2);
                 } else if (response == fourth) {
-                    Playlist newOldSortedPlaylist = new Playlist(playlist.sortReleaseYearDescending());
-
-                    displayPlaylist(newOldSortedPlaylist);
+                    sortPlaylist.loadData();
+                    sortPlaylist.sortReleaseYearDescending();
+                    displayPlaylist(sortPlaylist);
+                    wait(2);
                 } else if (response == fifth) {
                     System.out.println("What genre do you want to sort by?");
                     scanner.nextLine();
                     String genre = scanner.nextLine();
+                    try{
+                        if(Integer.parseInt(genre) % 1 == 0){
+                            System.out.println("Please enter a String Genre: ");
+                            genre = scanner.nextLine();
+                        }
+                    } catch(Exception ignored){}
 
-                    Playlist genrePlaylist = new Playlist(playlist.sortGenre(genre));
-                    displayPlaylist(genrePlaylist);
-
+                    sortPlaylist.loadData();
+                    sortPlaylist.sortGenre(genre);
+                    displayPlaylist(sortPlaylist);
+                    wait(2);
                 } else if (response == sixth) {
+                    playlist.loadData();
                     displayPlaylist(playlist);
+                    wait(2);
                 } else if (response == seventh) {
                     break;
                 } else{
                     System.out.println("Invalid Choice, Please pick a number between 1 - 7: \n");
+                    // Wait a second before showing the menu again
+                    wait(1);
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Invalid Choice, Please choose a valid number. \n");
+                wait(1);
                 scanner.nextLine();
             }
         }
@@ -102,5 +103,14 @@ public class SpotifyTester {
         );
 
         System.out.println(display);
+    }
+
+    public static void wait(int time) throws InterruptedException {
+        Thread.sleep(250);
+        for(int i = time; i > 0; i--){
+            System.out.println("Please wait " + i + " seconds...");
+            Thread.sleep(1000);
+        }
+        System.out.println("\n");
     }
 }
