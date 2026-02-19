@@ -43,18 +43,21 @@ public class SpotifyTester {
                 int response = scanner.nextInt();
 
                 if(response == first) {
-
-                } else if (response == second) {
                     Playlist AZSortedPlaylist = new Playlist(playlist.sortArtistAZ());
 
                     displayPlaylist(AZSortedPlaylist);
-
-                } else if (response == third) {
+                } else if (response == second) {
                     Playlist ZASortedPlaylist = new Playlist(playlist.sortArtistZA());
 
                     displayPlaylist(ZASortedPlaylist);
-                } else if (response == fourth) {
+                } else if (response == third) {
+                    Playlist oldNewSortedPlaylist = new Playlist(playlist.sortReleaseYearAscending());
 
+                    displayPlaylist(oldNewSortedPlaylist);
+                } else if (response == fourth) {
+                    Playlist newOldSortedPlaylist = new Playlist(playlist.sortReleaseYearDescending());
+
+                    displayPlaylist(newOldSortedPlaylist);
                 } else if (response == fifth) {
                     System.out.println("What genre do you want to sort by?");
                     scanner.nextLine();
