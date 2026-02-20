@@ -9,8 +9,8 @@ public class Playlist {
 
     public Playlist() {}
 
-    public void loadData() throws IOException, FileNotFoundException {
-            Scanner file = new Scanner(new File("H:\\M359 YAHYAA\\u4b-lab-spotify-mdyahyaa0104\\U4BLab\\spotify_unique_years_artists.txt"));
+    public void loadData(String filePath) throws IOException, FileNotFoundException {
+            Scanner file = new Scanner(new File(filePath));
             songs.removeAll(songs);
             while (file.hasNextLine()) {
                 String[] line = file.nextLine().split(",");
@@ -91,7 +91,7 @@ public class Playlist {
         }
     }
 
-    public void sortGenre(String genre){
+    public void searchGenre(String genre){
         ArrayList<Song> newList = new ArrayList<>();
 
         for(Song song: songs){

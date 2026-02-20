@@ -9,6 +9,7 @@ public class SpotifyTester {
         Scanner scanner = new Scanner(System.in);
         Playlist playlist = new Playlist();
         Playlist sortPlaylist = new Playlist();
+        String file = "H:\\M359 YAHYAA\\u4b-lab-spotify-mdyahyaa0104\\U4BLab\\spotify_unique_years_artists.txt";
 
         final int first = 1;
         final int second = 2;
@@ -28,42 +29,42 @@ public class SpotifyTester {
                 int response = scanner.nextInt();
 
                 if(response == first) {
-                    sortPlaylist.loadData();
+                    sortPlaylist.loadData(file);
                     sortPlaylist.sortArtistAZ();
                     displayPlaylist(sortPlaylist);
                     wait(2);
                 } else if (response == second) {
-                    sortPlaylist.loadData();
+                    sortPlaylist.loadData(file);
                     sortPlaylist.sortArtistZA();
                     displayPlaylist(sortPlaylist);
                     wait(2);
                 } else if (response == third) {
-                    sortPlaylist.loadData();
+                    sortPlaylist.loadData(file);
                     sortPlaylist.sortReleaseYearAscending();
                     displayPlaylist(sortPlaylist);
                     wait(2);
                 } else if (response == fourth) {
-                    sortPlaylist.loadData();
+                    sortPlaylist.loadData(file);
                     sortPlaylist.sortReleaseYearDescending();
                     displayPlaylist(sortPlaylist);
                     wait(2);
                 } else if (response == fifth) {
-                    System.out.println("What genre do you want to sort by?");
+                    System.out.println("What genre do you want to search for?");
                     scanner.nextLine();
                     String genre = scanner.nextLine();
                     try{
-                        if(Integer.parseInt(genre) % 1 == 0){
-                            System.out.println("Please enter a String Genre: ");
+                        while(Integer.parseInt(genre) % 1 == 0){
+                            System.out.println("Please enter a valid Genre: ");
                             genre = scanner.nextLine();
                         }
                     } catch(Exception ignored){}
 
-                    sortPlaylist.loadData();
-                    sortPlaylist.sortGenre(genre);
+                    sortPlaylist.loadData(file);
+                    sortPlaylist.searchGenre(genre);
                     displayPlaylist(sortPlaylist);
                     wait(2);
                 } else if (response == sixth) {
-                    playlist.loadData();
+                    playlist.loadData(file);
                     displayPlaylist(playlist);
                     wait(2);
                 } else if (response == seventh) {
@@ -97,7 +98,7 @@ public class SpotifyTester {
                 "2. Sort by Artist (Z -> A) \n" +
                 "3. Sort by Year (Old -> New) \n" +
                 "4. Sort by Year (New -> Old) \n" +
-                "5. Sort by Genre \n" +
+                "5. Search by Genre \n" +
                 "6. Display all Songs \n" +
                 "7. Quit the Program \n"
         );
