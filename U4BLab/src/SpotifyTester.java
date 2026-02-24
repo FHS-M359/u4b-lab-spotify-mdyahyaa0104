@@ -14,7 +14,7 @@ public class SpotifyTester {
         // file path
         String file = "H:\\M359 YAHYAA\\u4b-lab-spotify-mdyahyaa0104\\U4BLab\\spotify_unique_years_artists.txt";
 
-        // constant vars to improve readability of code
+        // constant variables coordinating with choices to improve readability of code
         final int first = 1;
         final int second = 2;
         final int third = 3;
@@ -124,16 +124,24 @@ public class SpotifyTester {
     }
 
     /**
-     * a static void method used to pause the program for an inputted number of seconds while displaying how much time is remaining
+     * a static void method used to pause the program for an inputted number of seconds while displaying how much time is remaining.
+     * this method also prevents any 'backlog'. (actions called while the program is 'waiting'
      * @param time # of seconds
      * @throws InterruptedException
      */
-    public static void wait(int time) throws InterruptedException {
+    public static void wait(int time) throws InterruptedException, IOException {
+        // 250ms delay before countdown
         Thread.sleep(250);
         for(int i = time; i > 0; i--){
             System.out.println("Please wait " + i + " seconds...");
             Thread.sleep(1000);
         }
+
+        //prevents backlog by ignoring all console inputs while the program is in wait
+        while(System.in.available() > 0){
+            System.in.read();
+        }
+
         System.out.println("\n");
     }
 }
