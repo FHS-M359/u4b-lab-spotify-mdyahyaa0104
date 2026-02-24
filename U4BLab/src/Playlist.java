@@ -1,14 +1,24 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Playlist {
-    private ArrayList<Song> songs = new ArrayList<>();
+    private ArrayList<Song> songs;
 
-    public Playlist() {}
+    public Playlist(ArrayList<Song> songs) {
+        this.songs = songs;
+    }
 
+    /**
+     * a void method of the Playlist class that loads a playlist Arraylist with the info provided in the txt file
+     * data should be in this format: title,artist,album,durationSeconds,releaseYear,genre
+     * @param filePath the file path of the txt file you wish to load
+     * @throws IOException
+     * @throws FileNotFoundException
+     */
     public void loadData(String filePath) throws IOException, FileNotFoundException {
             Scanner file = new Scanner(new File(filePath));
             songs.removeAll(songs);
@@ -26,6 +36,11 @@ public class Playlist {
         }
     }
 
+    /**
+     * a String method that returns the ArrayList in the playList class as a formatted string
+     * to be used in the displayPlaylist method of the SpotifyTester class
+     * @return a formatted string
+     */
     public String toString(){
         String output = "";
         for (Song song : songs) {
@@ -36,6 +51,9 @@ public class Playlist {
         return output;
     }
 
+    /**
+     * a method of the Playlist class that sorts an ArrayList with song objects by their artists alphabetically
+     */
     public void sortArtistAZ() {
         for(int i = 0; i < songs.size() - 1; i++) {
             int highIndex = i;
@@ -50,6 +68,9 @@ public class Playlist {
         }
     }
 
+    /**
+     * a method of the Playlist class that sorts an ArrayList with song objects by their artists reverse alphabetically
+     */
     public void sortArtistZA(){
         for(int i = 0; i < songs.size() - 1; i++) {
             int lowIndex = i;
@@ -64,6 +85,9 @@ public class Playlist {
         }
     }
 
+    /**
+     * a method of the Playlist class that sorts an ArrayList with song objects by their release year in ascending order
+     */
     public void sortReleaseYearAscending(){
         for (int i = 1; i < songs.size(); i++) {
             Song current = songs.get(i);
@@ -77,6 +101,10 @@ public class Playlist {
             songs.set(j + 1, current);
         }
     }
+
+    /**
+     * a method of the Playlist class that sorts an ArrayList with song objects by their release year in descending order
+     */
     public void sortReleaseYearDescending(){
         for (int i = 1; i < songs.size(); i++) {
             Song current = songs.get(i);
@@ -91,6 +119,10 @@ public class Playlist {
         }
     }
 
+    /**
+     * a method of the Playlist class that searches the Playlist ArrayList for the specific genre
+     * @param genre the genre which is being searched
+     */
     public void searchGenre(String genre){
         ArrayList<Song> newList = new ArrayList<>();
 

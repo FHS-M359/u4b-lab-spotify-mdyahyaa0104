@@ -1,5 +1,6 @@
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -7,10 +8,13 @@ import java.util.Scanner;
 public class SpotifyTester {
     public static void main(String[] args) throws IOException, FileNotFoundException, InterruptedException {
         Scanner scanner = new Scanner(System.in);
-        Playlist playlist = new Playlist();
-        Playlist sortPlaylist = new Playlist();
+        // origin/sorted playlists
+        Playlist playlist = new Playlist(new ArrayList<Song>());
+        Playlist sortPlaylist = new Playlist(new ArrayList<Song>());
+        // file path
         String file = "H:\\M359 YAHYAA\\u4b-lab-spotify-mdyahyaa0104\\U4BLab\\spotify_unique_years_artists.txt";
 
+        // constant vars to improve readability of code
         final int first = 1;
         final int second = 2;
         final int third = 3;
@@ -21,6 +25,7 @@ public class SpotifyTester {
 
         System.out.println("========= SPOTIFY MENU =========");
 
+        // loops repeatedly until the break statement is given
         while (true) {
             displayMenu();
             System.out.println("What do you want to do?");
@@ -29,29 +34,34 @@ public class SpotifyTester {
                 int response = scanner.nextInt();
 
                 if(response == first) {
+                    // load all data from the file
                     sortPlaylist.loadData(file);
+                    // sort
                     sortPlaylist.sortArtistAZ();
+                    // display
                     displayPlaylist(sortPlaylist);
-                    wait(2);
+                    // wait 3 seconds before showing the menu (enhancement)
+                    wait(3);
                 } else if (response == second) {
                     sortPlaylist.loadData(file);
                     sortPlaylist.sortArtistZA();
                     displayPlaylist(sortPlaylist);
-                    wait(2);
+                    wait(3);
                 } else if (response == third) {
                     sortPlaylist.loadData(file);
                     sortPlaylist.sortReleaseYearAscending();
                     displayPlaylist(sortPlaylist);
-                    wait(2);
+                    wait(3);
                 } else if (response == fourth) {
                     sortPlaylist.loadData(file);
                     sortPlaylist.sortReleaseYearDescending();
                     displayPlaylist(sortPlaylist);
-                    wait(2);
+                    wait(3);
                 } else if (response == fifth) {
                     System.out.println("What genre do you want to search for?");
                     scanner.nextLine();
                     String genre = scanner.nextLine();
+                    // try/catch block to check if the genre is an integer and prompts a valid string input if it's an int
                     try{
                         while(Integer.parseInt(genre) % 1 == 0){
                             System.out.println("Please enter a valid Genre: ");
@@ -62,20 +72,20 @@ public class SpotifyTester {
                     sortPlaylist.loadData(file);
                     sortPlaylist.searchGenre(genre);
                     displayPlaylist(sortPlaylist);
-                    wait(2);
+                    wait(3);
                 } else if (response == sixth) {
                     playlist.loadData(file);
                     displayPlaylist(playlist);
-                    wait(2);
+                    wait(3);
                 } else if (response == seventh) {
+                    // exit the loop
                     break;
                 } else{
-                    System.out.println("Invalid Choice, Please pick a number between 1 - 7: \n");
-                    // Wait a second before showing the menu again
+                    System.out.println("Invalid Choice, Please pick a choice between 1 - 7: \n");
                     wait(1);
                 }
             } catch (InputMismatchException e) {
-                System.out.println("Invalid Choice, Please choose a valid number. \n");
+                System.out.println("Invalid Choice, Please choose a valid choice. \n");
                 wait(1);
                 scanner.nextLine();
             }
@@ -84,12 +94,19 @@ public class SpotifyTester {
     }
 
 
+    /**
+     * a static void method that intakes a playlist parameter and displays it in as a formatted string table
+     * @param playlist a Playlist object
+     */
     public static void displayPlaylist(Playlist playlist){
         System.out.println("\n" + String.format("%-25s %-25s %-30s %-15s %-15s", "Title", "Artist", "Album", "Release Year", "Genre"));
         System.out.println("--------------------------------------------------------------------------------------------------------");
         System.out.println(playlist.toString());
     }
 
+    /**
+     * a static void method that displays the menu for SpotifyTester used to interact with the sorting mechanisms
+     */
     public static void displayMenu(){
         String display = "";
 
@@ -106,6 +123,11 @@ public class SpotifyTester {
         System.out.println(display);
     }
 
+    /**
+     * a static void method used to pause the program for an inputted number of seconds while displaying how much time is remaining
+     * @param time # of seconds
+     * @throws InterruptedException
+     */
     public static void wait(int time) throws InterruptedException {
         Thread.sleep(250);
         for(int i = time; i > 0; i--){
