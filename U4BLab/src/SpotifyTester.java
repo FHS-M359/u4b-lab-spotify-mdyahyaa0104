@@ -15,6 +15,7 @@ public class SpotifyTester {
         String file = "H:\\M359 YAHYAA\\u4b-lab-spotify-mdyahyaa0104\\U4BLab\\spotify_unique_years_artists.txt";
 
         // constant variables coordinating with choices to improve readability of code
+
         final int first = 1;
         final int second = 2;
         final int third = 3;
@@ -90,7 +91,7 @@ public class SpotifyTester {
                 scanner.nextLine();
             }
         }
-
+        scanner.close();
     }
 
 
@@ -128,6 +129,7 @@ public class SpotifyTester {
      * this method also prevents any 'backlog'. (actions called while the program is 'waiting'
      * @param time # of seconds
      * @throws InterruptedException
+     * @throws IOException
      */
     public static void wait(int time) throws InterruptedException, IOException {
         // 250ms delay before countdown

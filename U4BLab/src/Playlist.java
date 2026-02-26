@@ -19,20 +19,22 @@ public class Playlist {
      * @throws FileNotFoundException
      */
     public void loadData(String filePath) throws IOException, FileNotFoundException {
-            Scanner file = new Scanner(new File(filePath));
-            songs.removeAll(songs);
-            while (file.hasNextLine()) {
-                String[] line = file.nextLine().split(",");
+        Scanner file = new Scanner(new File(filePath));
+        songs.removeAll(songs);
 
-                String title = line[0];
-                String artist = line[1];
-                String album = line[2];
-                int durationSeconds = Integer.parseInt(line[3]);
-                int releaseYear = Integer.parseInt(line[4]);
-                String genre = line[5];
+        while (file.hasNextLine()) {
+            String[] line = file.nextLine().split(",");
 
-                songs.add(new Song(title, artist, album, durationSeconds, releaseYear, genre));
+            String title = line[0];
+            String artist = line[1];
+            String album = line[2];
+            int durationSeconds = Integer.parseInt(line[3]);
+            int releaseYear = Integer.parseInt(line[4]);
+            String genre = line[5];
+
+            songs.add(new Song(title, artist, album, durationSeconds, releaseYear, genre));
         }
+        file.close();
     }
 
     /**
